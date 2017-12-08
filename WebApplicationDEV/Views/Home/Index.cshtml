@@ -1,0 +1,99 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+
+<div id="button"></div>
+<div id="button2"></div>
+<div id="button3"></div>
+<div id="textAreaContainer"></div>
+<div id="dateBox"></div>
+<form action="/Login" method="post">
+    <div id="textBox"></div>
+    <div id="textBox2"></div>
+    <div id="login"></div>
+    <div id="password"></div>
+    <div id="validateAndSubmit"></div>
+</form>
+<div id="gridContainer"></div>
+
+<script type="text/javascript">
+    $(function () {
+        createDevExDateBox({ ctrID: "dateBox" })
+        createDevExButton({ ctrID: "button2", text: "Ahihi", onClick: function () { alertConfirm({ message: "Clicked!" }); } });
+        createDevExButton({ ctrID: "button3", text: "Ahihi", type: "success", onClick: function () { alert("Clicked!"); } });
+        $("#button").dxButton({
+            text: "Click Me",
+            onClick: function () {
+                DevExpress.ui.notify("Connection problem", "error", 3000);
+            }
+        });
+
+        $("#textAreaContainer").dxTextArea({
+            spellcheck: false
+        });
+        createDevExTextBox({ ctrID: "textBox", name: "textBox", valid: true, message: "Không thể bỏ trống dòng này." })
+        createDevExTextBoxMask({ ctrID: "textBox2", name: "textBox2", mask: "(+84)0000-000-000" })
+        $("#login").dxTextBox({
+            name: "Login"
+        }).dxValidator({
+            validationRules: [
+                { type: "required",message: "Khoong the bo trong" }
+            ]
+        });
+
+        $("#password").dxTextBox({
+            name: "Password",
+            mode: "password"
+        }).dxValidator({
+            validationRules: [
+                { type: "required" }
+            ]
+        });
+
+        $("#validateAndSubmit").dxButton({
+            text: "Submit",
+            type: "success",
+            useSubmitBehavior: true
+        });
+        var books = [
+        { author: 'D. Adams', title: "The Hitchhiker's Guide to the Galaxy", year: 1979, genre: 'Comedy, sci-fi' },
+        { author: 'K. Vonnegut', title: "Cat's Cradle", year: 1963, genre: 'Satire, sci-fi' },
+        { author: 'M. Mitchell', title: "Gone with the Wind", year: 1936, genre: 'Historical fiction' }
+        ];
+
+        $(function () {
+            $("#gridContainer").dxDataGrid({
+                dataSource: books,
+                remoteOperations: {
+                    filtering: true,
+                    sorting: true,
+                    paging: true,
+                    grouping: true,
+                    summary: true
+                },
+                editing: {
+                    allowUpdating: true,
+                    allowDeleting: true,
+                    allowAdding: true
+                },
+                selection: {
+                    mode: 'single',
+                    allowSelectAll: true,
+                    deferred: true
+                },
+                scrolling: {
+                    mode: "standard" // or "virtual" | "infinite"
+                },
+                "export": {
+                    enabled: true,
+                    fileName: "Employees",
+                    allowExportSelectedData: true
+                },
+            });
+        });
+    })
+</script>
